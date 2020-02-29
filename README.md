@@ -22,4 +22,5 @@ This should result in an EXE. You can run it as:
 * `psServiceWrapper.exe stop` : stop the service
 * `psServiceWrapper.exe restart` : restart the service
 * `psServiceWrapper.exe test` : run the program in non-service mode, showing output
+* `psServiceWrapper.exe show` : dump powershell source code
 * `psServiceWrapper.exe` : run the program in non-service mode, hide output

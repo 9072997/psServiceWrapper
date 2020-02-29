@@ -57,6 +57,13 @@ func main() {
 		return
 	}
 
+	// "show" is a custom action implimented by us
+	if len(os.Args) == 2 && os.Args[1] == "show" {
+		// dump source
+		fmt.Println(customFolder.FindString("main.ps1"))
+		return
+	}
+
 	// allow the user to install the service using this binary
 	if len(os.Args) >= 2 {
 		err := service.Control(s, os.Args[1])
@@ -65,8 +72,9 @@ func main() {
 			for i := 0; i < len(service.ControlAction); i++ {
 				fmt.Println(" ", service.ControlAction[i])
 			}
-			// "test" is implimented by us
+			// "test" and "show" are implimented by us
 			fmt.Println(" ", "test")
+			fmt.Println(" ", "show")
 
 			fmt.Println(err)
 		}
