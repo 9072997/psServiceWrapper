@@ -1,20 +1,17 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
-
-	"github.com/gobuffalo/packr"
 )
 
-var customFolder = packr.NewBox("./custom")
+//go:embed custom/main.ps1
+var script string
 
 func runScript(outputEnabled bool) {
-	// load script
-	script, err := customFolder.FindString("main.ps1")
-	fatalErr(err)
 	// tabs trigger tab-completion. use spaces instead.
 	// make sure we have a trailing newline so last line will execute.
 	script = strings.ReplaceAll(script, "\t", " ") + "\n"

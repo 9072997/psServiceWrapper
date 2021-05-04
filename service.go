@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -28,15 +29,13 @@ func (p *program) Stop(s service.Service) error {
 	return nil
 }
 
+//go:embed custom/service.json
+var configJSON []byte
+
 func main() {
 	// load service name and description from service.json file
-	configJSON, err := customFolder.Find("service.json")
-	if err != nil {
-		// logger not ready
-		panic(err)
-	}
 	svcConfig := new(service.Config)
-	err = json.Unmarshal(configJSON, svcConfig)
+	err := json.Unmarshal(configJSON, svcConfig)
 	if err != nil {
 		// logger not ready
 		panic(err)
@@ -60,7 +59,7 @@ func main() {
 	// "show" is a custom action implimented by us
 	if len(os.Args) == 2 && os.Args[1] == "show" {
 		// dump source
-		fmt.Println(customFolder.FindString("main.ps1"))
+		fmt.Println(script)
 		return
 	}
 

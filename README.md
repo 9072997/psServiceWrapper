@@ -1,19 +1,13 @@
-psServiceWrapper is a golang wrapper that can run your powershell scripts as services. To use it, you will need [this library](https://github.com/kardianos/service), [packr](https://github.com/gobuffalo/packr), and the [Go compiler](https://golang.org). For the Go compiler, you just download and run the installer. After that is done you can get the other 2 with:
-```
-go get -u github.com/kardianos/service
-go get -u github.com/gobuffalo/packr
-go get -u github.com/gobuffalo/packr/packr
-```
+psServiceWrapper is a golang wrapper that can run your powershell scripts as services. To use it, you will need the [Go compiler](https://golang.org).
 
 You should update `main.ps1` and `service.json` in the custom folder. Fill in a name and description for your service in `service.json`. These will show up in the windows service manager. Your script goes in `main.ps1`. Unfortunately you can't put other powershell scripts in this folder, so you need to put all the logic for your script in one file. The program will exit when your script does, so your script should probably include a loop. When your script exits, our wrapper will exit, but it might be restarted by windows depending on how you set up your service.
 
 NOTE: if your script contains tabs, they will be replaced with spaces to prevent auto-complete from triggering. Normally this is fine, but if you have string literals that contain tabs it can break your scripts.
 
-Once you have your script and `service.json` in place, you can compile your program with
+Once you have your script and `service.json` in place, you can compile your program by running
 ```
-packr build
+go build
 ```
-Note that this is diffrent from the normal `go build` command, because we need to give packr an opertunity to bundle in your files from `custom`.
 
 This should result in an EXE. You can run it as:
 * `psServiceWrapper.exe install` : register the service with Windows
